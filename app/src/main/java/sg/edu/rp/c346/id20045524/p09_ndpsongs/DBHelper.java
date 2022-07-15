@@ -111,6 +111,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<String> getYearLabels(){
         ArrayList<String> yearLabels = new ArrayList<>();
+        yearLabels.add("--");
 
         SQLiteDatabase db = this.getReadableDatabase();
 

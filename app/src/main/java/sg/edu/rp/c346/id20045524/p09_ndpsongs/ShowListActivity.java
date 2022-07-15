@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,6 @@ public class ShowListActivity extends AppCompatActivity {
     ArrayList<Song> alSong;
     ListView lv;
     ArrayAdapter<Song> aaSong;
-    ArrayAdapter<String> aaYearFilter;
     boolean toggle5Stars = true;
 
     @Override
@@ -76,12 +76,16 @@ public class ShowListActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                // On selecting a spinner item
                 String yearLabel = adapterView.getItemAtPosition(position).toString();
-
-                // Showing selected spinner item
                 alSong.clear();
-                alSong.addAll(dbh.getAllSongsByYear(Integer.parseInt(yearLabel)));
+                if(!yearLabel.equals("--")){
+                    alSong.addAll(dbh.getAllSongsByYear(Integer.parseInt(yearLabel)));
+                    Toast.makeText(ShowListActivity.this, yearLabel,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    alSong.addAll(dbh.getAllSongs());
+                }
+
                 aaSong.notifyDataSetChanged();
 
             }
@@ -109,9 +113,7 @@ public class ShowListActivity extends AppCompatActivity {
 
     private void loadSpinnerData() {
         DBHelper dbh = new DBHelper(this);
-
         ArrayList<String> yearFilter = dbh.getYearLabels();
-
         ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, yearFilter);
 
