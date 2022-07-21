@@ -58,8 +58,29 @@ public class Song implements Serializable {
 
         }
 
-        return  title + "\n" + singers + " - " + year + "\n" + starDisplay;
+        return title + "\n" + singers + " - " + year + "\n" + starDisplay;
 
+    }
+
+    public String starDisplay() {
+        String starDisplay = "";
+        if (stars == 1){
+            starDisplay += "*";
+
+        } else if (stars == 2){
+            starDisplay += "**";
+
+        } else if (stars == 3){
+            starDisplay += "***";
+
+        } else if (stars == 4){
+            starDisplay += "****";
+
+        } else if (stars == 5){
+            starDisplay += "*****";
+
+        }
+        return starDisplay;
     }
 
 
